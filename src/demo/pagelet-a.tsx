@@ -1,21 +1,18 @@
-import { useState } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { LocalStateProvider } from "./local-state";
+import { PageletAContents } from "./pagelet-a-contents";
 import styles from "./pagelet-a.module.css";
-import { ResultsRenderer } from "./results";
+
+const queryClient = new QueryClient();
 
 export const PageletA = () => {
-  const [toggle, setToggle] = useState(false);
-
   return (
-    <div className={styles.pageletARoot}>
-      This is pagelet A
-      <button
-        onClick={() => {
-          setToggle(!toggle);
-        }}
-      >
-        Render Toggle
-      </button>
-      <ResultsRenderer />
-    </div>
+    <LocalStateProvider>
+      <QueryClientProvider client={queryClient}>
+        <div className={styles.pageletARoot}>
+          <PageletAContents />
+        </div>
+      </QueryClientProvider>
+    </LocalStateProvider>
   );
 };
